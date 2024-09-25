@@ -49,4 +49,8 @@ dependencies {
 
     // GreenRobot EventBus
     implementation libs.eventbus
+
+    // Jackson ObjectMapper
+    implementation libs.jackson.databind
+
 }
