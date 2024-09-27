@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
 
         RequestBody formBody = new FormBody.Builder()
-                .add("username", "moura.placas")
-                .add("password", "moura2525")
+                .add("username", username)
+                .add("password", password)
                 .build();
 
         Request request = new Request.Builder()

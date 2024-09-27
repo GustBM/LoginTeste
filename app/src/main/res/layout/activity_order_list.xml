@@ -8,10 +8,47 @@
     tools:context=".OrderListActivity"
     android:background="@drawable/list_background">
 
+    <TextView
+        android:id="@+id/sent_photo_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Imagens Enviadas"
+        android:visibility="gone"
+        android:padding="8dp"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="32dp">
+
+        <ImageView
+            android:id="@+id/photo1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:src="@drawable/icon_image"
+            android:layout_marginLeft="16dp"/>
+
+        <ImageView
+            android:id="@+id/photo2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/icon_image"
+            android:visibility="gone" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/recycler_view" />
+        android:id="@+id/recycler_view"
+        android:paddingTop="16dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

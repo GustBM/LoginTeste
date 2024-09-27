@@ -2,6 +2,10 @@ package com.example.loginteste;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +39,7 @@ import okhttp3.Response;
 public class OrderListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RCAdapter rcAdapter;
+    List<Order> orderArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +56,7 @@ public class OrderListActivity extends AppCompatActivity {
         fetchOrders(user.getLojaId(), recyclerView);
 
         try {
-            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.SECONDS.sleep(3);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -75,7 +80,7 @@ public class OrderListActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     String responseData = response.body().string();
                     Gson gson = new Gson();
-                    List<Order> orderArrayList = gson.fromJson(responseData, OrderResponse.class).getAtendimentos();
+                    orderArrayList = gson.fromJson(responseData, OrderResponse.class).getAtendimentos();
                     rcAdapter = new RCAdapter(OrderListActivity.this, orderArrayList);
                     recyclerView.setAdapter(rcAdapter);
                 }
@@ -95,12 +100,26 @@ public class OrderListActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
     }
 
-    @Subscribe(threadMode = ThreadMode.POSTING)
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onPhotosCapturedEvent(@NonNull PhotosCapturedEvent event) {
         Bitmap photoPath1 = event.getPhoto1Path();
         Bitmap photoPath2 = event.getPhoto2Path();
-        // Toast.makeText(this, "Fotos capturadas: " + photoPath1 + ", " + photoPath2, Toast.LENGTH_LONG).show();
-        System.out.println("asdf Fotos capturadas: " + photoPath1.toString() + ", " + photoPath2.toString());
+
+        ImageView photoView1 = findViewById(R.id.photo1);
+        ImageView photoView2 = findViewById(R.id.photo2);
+        TextView textView = findViewById(R.id.sent_photo_text);
+        textView.setText("Imagens enviadas para Placa " + event.getPlaca());
+        photoView1.setImageBitmap(photoPath1);
+        photoView2.setImageBitmap(photoPath2);
+
+        photoView1.setVisibility(View.VISIBLE);
+        photoView2.setVisibility(View.VISIBLE);
+        textView.setVisibility(View.VISIBLE);
+
+        int paddingInDp = 160;
+        float scale = getResources().getDisplayMetrics().density;
+        int paddingInPx = (int) (paddingInDp * scale + 0.5f);
+        recyclerView.setPadding(16, paddingInPx, 16, 0);
     }
 }
 

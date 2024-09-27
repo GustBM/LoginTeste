@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -20,12 +19,11 @@ import com.example.loginteste.data.events.PhotosCapturedEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.concurrent.TimeUnit;
-
 public class CameraActivity extends AppCompatActivity {
     private Button btnPhoto1, btnPhoto2;
     private Bitmap photoPath1, photoPath2;
     private ImageView photo1, photo2;
+    private String placa;
     private static final int REQUEST_IMAGE_CAPTURE_1 = 1;
     private static final int REQUEST_IMAGE_CAPTURE_2 = 2;
 
@@ -43,33 +41,21 @@ public class CameraActivity extends AppCompatActivity {
         btnPhoto1.setOnClickListener(v -> openCamera(REQUEST_IMAGE_CAPTURE_1));
         btnPhoto2.setOnClickListener(v -> openCamera(REQUEST_IMAGE_CAPTURE_2));
 
+        Bundle extras = getIntent().getExtras();
+        placa = extras.getString("order");
+
         Button sendButton = findViewById(R.id.sendBtn);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (photoPath1 != null && photoPath2 != null) {
-                    EventBus.getDefault().post(new PhotosCapturedEvent(photoPath1, photoPath2));
-                    System.out.println("asdf4 " + photoPath1.toString() + " " + photoPath2.toString());
+                    EventBus.getDefault().postSticky(new PhotosCapturedEvent(photoPath1, photoPath2, placa));
                     Intent intent = new Intent(CameraActivity.this, OrderListActivity.class);
                     startActivity(intent);
-                    finish();
+                    // finish();
                 }
             }
         });
-
-        /*OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                if (photoPath1 != null && photoPath2 != null) {
-                    EventBus.getDefault().post(new PhotosCapturedEvent(photoPath1, photoPath2));
-                    System.out.println("asdf4 " + photoPath1.toString() + " " + photoPath2.toString());
-                    finish();
-                } else {
-                    System.out.println("asdf Capture as duas fotos antes de sair");
-                }
-            }
-        };
-        getOnBackPressedDispatcher().addCallback(this,onBackPressedCallback);*/
     }
 
     private void openCamera(int requestCode) {
@@ -98,16 +84,4 @@ public class CameraActivity extends AppCompatActivity {
             }
         }
     }
-
-    /*@Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (photoPath1 != null && photoPath2 != null) {
-            EventBus.getDefault().post(new PhotosCapturedEvent(photoPath1, photoPath2));
-            System.out.println("asdf4 " + photoPath1.toString() + " " + photoPath2.toString());
-            finish();
-        } else {
-            System.out.println("asdf Capture as duas fotos antes de sair");
-        }
-    }*/
 }
