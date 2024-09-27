@@ -1,6 +1,7 @@
 [versions]
 agp = "8.6.0"
 eventbus = "3.2.0"
+gson = "2.10.1"
 jacksonDatabind = "2.11.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -15,6 +16,7 @@ recyclerview = "1.3.2"
 
 [libraries]
 eventbus = { module = "org.greenrobot:eventbus", version.ref = "eventbus" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jacksonDatabind" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
