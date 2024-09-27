@@ -1,18 +1,26 @@
 package com.example.loginteste;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.loginteste.data.events.PhotosCapturedEvent;
 import com.example.loginteste.data.model.Order;
 import com.example.loginteste.data.model.OrderResponse;
-import com.example.loginteste.data.model.RCAdapter;
+import com.example.loginteste.data.adapters.RCAdapter;
 import com.example.loginteste.data.model.User;
-import com.example.loginteste.data.utils.NetworkUtils;
+import com.example.loginteste.data.network.NetworkUtils;
 import com.example.loginteste.data.utils.SessionManager;
 import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,7 +34,6 @@ import okhttp3.Response;
 
 public class OrderListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
-    //ArrayList<Order> orderArrayList;
     RCAdapter rcAdapter;
 
     @Override
@@ -38,10 +45,6 @@ public class OrderListActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-        //orderArrayList = new ArrayList<>();
-
-        //rcAdapter = new RCAdapter(this, orderArrayList);
-        //recyclerView.setAdapter(rcAdapter);
 
         User user = SessionManager.getUser(this);
 
@@ -55,15 +58,6 @@ public class OrderListActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(rcAdapter);
 
-        /*fetchOrders(user.getLojaId()).thenAccept(orders -> {
-            orderArrayList.addAll(orders);
-            rcAdapter.notifyDataSetChanged();
-        }).exceptionally(e -> {
-            System.err.println("Error fetching orders: " + e.getMessage());
-            return null;
-        });*/
-
-
     }
 
     private void fetchOrders(String shopId, RecyclerView recyclerView) {
@@ -73,7 +67,7 @@ public class OrderListActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                // Handle failure
+                runOnUiThread(() -> Toast.makeText(OrderListActivity.this, "Erro ao Buscar Atendimentos!", Toast.LENGTH_SHORT).show());
             }
 
             @Override
@@ -89,42 +83,24 @@ public class OrderListActivity extends AppCompatActivity {
         });
     }
 
-    /*private List<Order> fetchOrders(String shopId) {
-        OkHttpClient client = new OkHttpClient();
-        // CompletableFuture<List<Order>> future = new CompletableFuture<>();
-        Request request = NetworkUtils.getGetRequest("getAtendimentosApp?lojaId=" + shopId + "&version=2.84");
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
-        try (Response response = client.newCall(request).execute()) {
-            Gson gson = new Gson();
-            String responseData = response.body().string();
-            List<Order> response = gson.fromJson(responseData, OrderResponse.class).getAtendimentos();
-            return response;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
 
-        /*client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                future.completeExceptionally(e);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    Gson gson = new Gson();
-                    String responseData = response.body().string();
-
-                    List<Order> orderList = gson.fromJson(responseData, OrderResponse.class).getAtendimentos();
-                    future.complete(orderList);
-
-                } else {
-                    future.completeExceptionally(new IOException("Failed to fetch orders"));
-                }
-            }
-        });
-
-        // return future;
-    }*/
+    @Subscribe(threadMode = ThreadMode.POSTING)
+    public void onPhotosCapturedEvent(@NonNull PhotosCapturedEvent event) {
+        Bitmap photoPath1 = event.getPhoto1Path();
+        Bitmap photoPath2 = event.getPhoto2Path();
+        // Toast.makeText(this, "Fotos capturadas: " + photoPath1 + ", " + photoPath2, Toast.LENGTH_LONG).show();
+        System.out.println("asdf Fotos capturadas: " + photoPath1.toString() + ", " + photoPath2.toString());
+    }
 }
 

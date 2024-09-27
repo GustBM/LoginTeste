@@ -3,7 +3,7 @@ package com.example.loginteste.data.model;
 import java.util.List;
 
 public class Order {
-    /*public Order(String placa, String id, String autorizacao, String data, String marcaModelo, boolean doDeepValidation, boolean doMotoDeepVAlidation, boolean motoAutomaticAproval, boolean doPhotoOfPhotoValidation, double valor, boolean receberPlacas, String nomeRecebedor, String cpfRecebedor, boolean chassiDeepValidation, boolean jumpButtonEnabled, boolean estampBiometria, boolean justificaChassi, boolean cercaAtiva, double distanciaCerca, String categoria, String ufSerpro, String municipio, String statusSerpro, int tipoVeiculo, String latitude, String longitude, String latitudeRetirada, String longitudeRetirada, boolean validarAfixador, String renavam, String cpfCondutor, String nomeCondutor, String cpfProprietario, String dianteiraSerial, String traseiraSerial, String segundaTraseiraSerial, String dianteiraB64, String traseiraB64, String segundaTraseiraB64, Dianteira dianteira, Dianteira traseira, Dianteira segundaTraseira, String chassi, int tentativasChassi, int dianteiraQR, int traseiraQR, int segundaTraseiraQR, int tentativasQrOcr, String serproId, int qtdPlacas, List<Step> steps) {
+    public Order(String placa, String id, String autorizacao, String data, String marcaModelo, boolean doDeepValidation, boolean doMotoDeepVAlidation, boolean motoAutomaticAproval, boolean doPhotoOfPhotoValidation, double valor, boolean receberPlacas, String nomeRecebedor, String cpfRecebedor, boolean chassiDeepValidation, boolean jumpButtonEnabled, boolean estampBiometria, boolean justificaChassi, boolean cercaAtiva, double distanciaCerca, String categoria, String ufSerpro, String municipio, String statusSerpro, int tipoVeiculo, String latitude, String longitude, String latitudeRetirada, String longitudeRetirada, boolean validarAfixador, String renavam, String cpfCondutor, String nomeCondutor, String cpfProprietario, String dianteiraSerial, String traseiraSerial, String segundaTraseiraSerial, String dianteiraB64, String traseiraB64, String segundaTraseiraB64, Dianteira dianteira, Dianteira traseira, Dianteira segundaTraseira, String chassi, int tentativasChassi, int dianteiraQR, int traseiraQR, int segundaTraseiraQR, int tentativasQrOcr, String serproId, int qtdPlacas, List<Step> steps) {
         this.placa = placa;
         this.id = id;
         this.autorizacao = autorizacao;
@@ -55,10 +55,6 @@ public class Order {
         this.serproId = serproId;
         this.qtdPlacas = qtdPlacas;
         this.steps = steps;
-    }*/
-
-    public Order(String placa) {
-        this.placa = placa;
     }
 
     private String placa;

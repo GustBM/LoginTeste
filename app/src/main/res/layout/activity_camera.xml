@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/list_background">
+
+    <Button
+        android:id="@+id/btn_photo1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/photo_1_text"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/blue"
+        android:textSize="20sp"
+        android:layout_marginTop="32dp"
+        android:layout_marginHorizontal="16dp"/>
+
+    <ImageView
+        android:id="@+id/photo_view1"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/photo_1_description"
+        android:src="@drawable/icon_image"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/btn_photo2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/photo_2_text"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/blue"
+        android:textSize="20sp"
+        android:layout_marginTop="32dp"
+        android:layout_marginHorizontal="16dp"/>
+
+    <ImageView
+        android:id="@+id/photo_view2"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/photo_2_description"
+        android:src="@drawable/icon_image"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/sendBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/send"
+    />
+
+</LinearLayout>

@@ -22,7 +22,7 @@
             android:scaleType="centerCrop"
             android:padding="8dp"
             android:layout_centerVertical="true"
-            android:src="@color/blue"/>
+            android:src="@drawable/icon_order_card"/>
 
         <TextView
             android:id="@+id/store_card_title"
